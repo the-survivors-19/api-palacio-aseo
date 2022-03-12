@@ -10,7 +10,7 @@ async function bootstrap() {
     cors: true
   });
   app.use(cookieParser());
-  app.use(csurf());
+  app.use(csurf({cookie: true}));
   await app.listen(port, () => {
     console.log(`Listening in port: ${port}`);
   });
