@@ -5,6 +5,7 @@ import * as csurf from 'csurf';
 import { AppModule } from './app/app.module';
 import { SwaggerModule, DocumentBuilder, SwaggerDocumentOptions } from '@nestjs/swagger';
 import { RedocModule, RedocOptions } from 'nestjs-redoc';
+import { ValidationPipe } from '@nestjs/common';
 
 const informationAPI = {
   name: 'API palacio del aseo',
@@ -48,6 +49,12 @@ async function bootstrap() {
   };
 
   await RedocModule.setup('api', app, swaggerDocument, redocOptions);
+
+  app.useGlobalPipes(new ValidationPipe({
+    transform: true,
+    whitelist: true,
+    forbidNonWhitelisted: true
+  }));
 
   app.use(cookieParser());
   app.use(csurf({cookie: true}));
