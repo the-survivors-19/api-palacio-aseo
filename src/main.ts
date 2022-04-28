@@ -56,8 +56,8 @@ async function bootstrap() {
     forbidNonWhitelisted: true
   }));
 
-  app.use(cookieParser());
-  app.use(csurf({cookie: true}));
+ /*  app.use(cookieParser());
+  app.use(csurf({cookie: true})); */
 
   await app.listen(port, async () => {
     console.log(`App in: ${await app.getUrl()}`);
