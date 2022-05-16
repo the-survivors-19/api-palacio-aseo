@@ -17,7 +17,7 @@ export class UsersController {
       'photo',
       {
         storage: diskStorage({
-          destination: './images/users',
+          destination: './src/images/users',
           filename: ({body}, file, cb) => {
             cb(null, `${ body.full_name }_${ Date.now() }.png`);
           }
@@ -57,7 +57,7 @@ export class UsersController {
       'photo',
       {
         storage: diskStorage({
-          destination: './images/users',
+          destination: './src/images/users',
           filename: ({body}, file, cb) => {
             cb(null, `${ body.full_name }_${ Date.now() }.png`);
           }
