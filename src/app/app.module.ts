@@ -2,6 +2,8 @@ import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { AuthModule } from 'src/auth/auth.module';
+import { CategoriesModule } from 'src/categories/categories.module';
+import { Category } from 'src/categories/entities/category.entity';
 import { Provider } from 'src/providers/entities/provider.entity';
 import { ProvidersModule } from 'src/providers/providers.module';
 import { User } from 'src/users/entities/user.entity';
@@ -20,11 +22,12 @@ import { AppController } from './app.controller';
       password: process.env.DB_PASSWORD,
       database: process.env.DB_NAME,
       synchronize: true,
-      entities: [User, Provider]
+      entities: [User, Provider, Category]
     }),
     AuthModule,
     UsersModule,
     ProvidersModule,
+    CategoriesModule,
   ],
   controllers: [AppController],
   providers: [],

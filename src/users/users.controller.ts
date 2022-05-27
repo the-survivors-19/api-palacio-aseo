@@ -9,10 +9,10 @@ import { bcrypt, validateConfirmations } from 'src/helpers';
 import { JwtAuthGuard } from 'src/auth/guards';
 
 @Controller('api/users')
+@UseGuards(JwtAuthGuard)
 export class UsersController {
   constructor(private readonly usersService: UsersService) { }
 
-  @UseGuards(JwtAuthGuard)
   @Post()
   @UseInterceptors(
     FileInterceptor(
@@ -43,7 +43,6 @@ export class UsersController {
     }
   }
 
-  @UseGuards(JwtAuthGuard)
   @Get()
   async findAll() {
     const users = await this.usersService.findAll();
@@ -51,14 +50,12 @@ export class UsersController {
     return users;
   }
 
-  @UseGuards(JwtAuthGuard)
   @Get(':id')
   async findOne(@Param('id') id: number) {
     const { password, ...user } = await this.usersService.findOne(id);
     return user;
   }
 
-  @UseGuards(JwtAuthGuard)
   @Patch(':id')
   @UseInterceptors(
     FileInterceptor(
@@ -92,7 +89,6 @@ export class UsersController {
     return { message: `User ${id} updated.` }
   }
 
-  @UseGuards(JwtAuthGuard)
   @Delete(':id')
   remove(@Param('id') id: number) {
     return this.usersService.remove(id);
