@@ -16,6 +16,7 @@ export class CreateUserDto {
   @ApiProperty()
   @IsString()
   @MaxLength(45)
+  @IsOptional()
   address: string;
 
 
