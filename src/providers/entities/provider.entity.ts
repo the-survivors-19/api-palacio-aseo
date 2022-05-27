@@ -1,4 +1,5 @@
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { Product } from "src/products/entities/product.entity";
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity('providers')
 export class Provider {
@@ -22,4 +23,7 @@ export class Provider {
 
   @Column({ type: 'boolean', default: false })
   remove: boolean;
+
+  @OneToMany(() => Product, product => product.provider_id)
+  products: Product[];
 }
