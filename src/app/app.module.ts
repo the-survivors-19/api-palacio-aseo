@@ -2,6 +2,11 @@ import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { AuthModule } from 'src/auth/auth.module';
+<<<<<<< HEAD
+=======
+import { Provider } from 'src/providers/entities/provider.entity';
+import { ProvidersModule } from 'src/providers/providers.module';
+>>>>>>> providers
 import { User } from 'src/users/entities/user.entity';
 import { UsersModule } from 'src/users/users.module';
 import { Connection } from 'typeorm';
@@ -18,10 +23,15 @@ import { AppController } from './app.controller';
       password: process.env.DB_PASSWORD,
       database: process.env.DB_NAME,
       synchronize: true,
-      entities: [User]
+      entities: [User, Provider]
     }),
     AuthModule,
+<<<<<<< HEAD
     UsersModule
+=======
+    UsersModule,
+    ProvidersModule,
+>>>>>>> providers
   ],
   controllers: [AppController],
   providers: [],
