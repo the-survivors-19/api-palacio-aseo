@@ -12,23 +12,25 @@ export class CreateUserDto {
   @IsPhoneNumber('CO')
   phone: string;
 
-
   @ApiProperty()
   @IsString()
   @MaxLength(45)
   @IsOptional()
   address: string;
 
-
   @ApiProperty()
   @IsEmail()
   email: string;
-
 
   @ApiProperty()
   @IsString()
   @MinLength(8)
   password: string;
+
+  @ApiProperty()
+  @IsString()
+  @MinLength(8)
+  password_confirmation: string;
 
   @ApiProperty()
   @IsOptional()

@@ -1,11 +1,12 @@
-import { BadRequestException, Body, Controller, Post, Req, UseGuards } from '@nestjs/common';
+import { BadRequestException, Body, Controller, Post, UploadedFile, UseGuards, UseInterceptors } from '@nestjs/common';
+import { FileInterceptor } from '@nestjs/platform-express';
+import { diskStorage } from 'multer';
 import { AuthService } from 'src/auth/auth.service';
-import { LocalAuthGuard, JwtAuthGuard } from 'src/auth/guards';
-<<<<<<< HEAD
-=======
+import { LocalAuthGuard } from 'src/auth/guards';
 import { bcrypt } from 'src/helpers';
->>>>>>> providers
+import { validateConfirmations } from 'src/helpers';
 import { CreateUserDto } from 'src/users/dto/create-user.dto';
+import { UsersController } from 'src/users/users.controller';
 import { UsersService } from 'src/users/users.service';
 import { LoginDto } from './dto/login.dto';
 
@@ -18,27 +19,35 @@ export class AppController {
 
   @UseGuards(LocalAuthGuard)
   @Post('/login')
-<<<<<<< HEAD
-  async login(@Body() login: LoginDto){
-    return this.authService.login(login);
-=======
   async login(@Body() loginDto: LoginDto){
     return this.authService.login(loginDto);
->>>>>>> providers
   }
 
   @Post('/register')
-  async register(@Body() createUserDto: CreateUserDto){
+  @UseInterceptors(
+    FileInterceptor(
+      'photo',
+      {
+        storage: diskStorage({
+          destination: './src/images/users',
+          filename: ({ body }, file, cb) => {
+            cb(null, `${body.full_name}_${Date.now()}.png`);
+          }
+        })
+      }
+    )
+  )
+  async register(@UploadedFile() photo: Express.Multer.File, @Body() createUserDto: CreateUserDto){
+    validateConfirmations(createUserDto);
+    if (createUserDto.password != createUserDto.password_confirmation) throw new BadRequestException({ msg: 'la contraseña no coincide con la confirmación' });
+    delete createUserDto.password_confirmation;
+    if (photo) {
+      createUserDto.photo = `${photo.destination}/${photo.filename}`;
+    }
     const existUser = await this.userService.findEmail(createUserDto.email);
-    if (existUser) throw new BadRequestException({ response: 'This email already exist, if you forgot the password please contact with the admin.' });
-<<<<<<< HEAD
-    await this.userService.create(createUserDto);
-    return this.login({ email: createUserDto.email, password: createUserDto.password });
-=======
-    const password = createUserDto.password;
+    if (existUser) throw new BadRequestException({ response: 'This email already exist.' });
     createUserDto.password = await bcrypt.encryptPassword(createUserDto.password);
-    await this.userService.create(createUserDto);
-    return this.login({ email: createUserDto.email, password });
->>>>>>> providers
+    if (!this.userService.create(createUserDto)) throw new BadRequestException({ message: 'Error to create the user.' });
+    return this.login({ email: createUserDto.email, password: createUserDto.password });
   }
 }
