@@ -19,7 +19,7 @@ export class UsersController {
       'photo',
       {
         storage: diskStorage({
-          destination: './src/images/users',
+          destination: `${process.env.PATH_IMAGES}/users`,
           filename: ({ body }, file, cb) => {
             cb(null, `${body.full_name}_${Date.now()}.png`);
           }
@@ -62,7 +62,7 @@ export class UsersController {
       'photo',
       {
         storage: diskStorage({
-          destination: './src/images/users',
+          destination: `${process.env.PATH_IMAGES}/users`,
           filename: ({ body }, file, cb) => {
             cb(null, `${body.full_name}_${Date.now()}.png`);
           }
