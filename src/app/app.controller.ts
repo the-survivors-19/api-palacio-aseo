@@ -6,7 +6,6 @@ import { LocalAuthGuard } from 'src/auth/guards';
 import { bcrypt } from 'src/helpers';
 import { validateConfirmations } from 'src/helpers';
 import { CreateUserDto } from 'src/users/dto/create-user.dto';
-import { UsersController } from 'src/users/users.controller';
 import { UsersService } from 'src/users/users.service';
 import { LoginDto } from './dto/login.dto';
 
@@ -20,7 +19,7 @@ export class AppController {
   @UseGuards(LocalAuthGuard)
   @Post('/login')
   async login(@Body() loginDto: LoginDto){
-    return this.authService.login(loginDto);
+    return await this.authService.login(loginDto);
   }
 
   @Post('/register')
@@ -47,7 +46,7 @@ export class AppController {
     const existUser = await this.userService.findEmail(createUserDto.email);
     if (existUser) throw new BadRequestException({ response: 'This email already exist.' });
     createUserDto.password = await bcrypt.encryptPassword(createUserDto.password);
-    if (!this.userService.create(createUserDto)) throw new BadRequestException({ message: 'Error to create the user.' });
-    return this.login({ email: createUserDto.email, password: createUserDto.password });
+    if (!(await this.userService.create(createUserDto))) throw new BadRequestException({ message: 'Error to create the user.' });
+    return await this.login({ email: createUserDto.email, password: createUserDto.password });
   }
 }

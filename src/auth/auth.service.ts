@@ -20,11 +20,21 @@ export class AuthService {
   }
 
   async login({ email }: LoginDto) {
+    const {
+      id,
+      auth_google,
+      created_at,
+      password,
+      updated_at,
+      state,
+      ...user
+    } = await this.usersService.findEmail(email);
     const payload = {
       email
     }
     return {
       token: this.jwtService.sign(payload),
+      user
     }
   }
 }
