@@ -19,9 +19,9 @@ export class UsersController {
       'photo',
       {
         storage: diskStorage({
-          destination: `${process.env.PATH_IMAGES}/users`,
+          destination: `images/users`,
           filename: ({ body }, file, cb) => {
-            cb(null, `${body.full_name}_${Date.now()}.png`);
+            cb(null, `${Date.now()}_${body.email}.png`);
           }
         })
       }
@@ -62,15 +62,16 @@ export class UsersController {
       'photo',
       {
         storage: diskStorage({
-          destination: `${process.env.PATH_IMAGES}/users`,
+          destination: `images/users`,
           filename: ({ body }, file, cb) => {
-            cb(null, `${body.full_name}_${Date.now()}.png`);
+            cb(null, `${Date.now()}_${body.email}.png`);
           }
         })
       }
     )
   )
   async update(@Param('id') id: number, @UploadedFile() photo: Express.Multer.File, @Body() updateUserDto: UpdateUserDto): Promise<object> {
+    validateConfirmations(updateUserDto);
     const user = await this.usersService.findOne(id);
     if (updateUserDto.password) {
       if (!updateUserDto.old_password) throw new BadRequestException({ message: `Field 'old_password' required` });

@@ -17,7 +17,7 @@ export class ProductsController {
       'img_1',
       {
         storage: diskStorage({
-          destination: `${process.env.PATH_IMAGES}/products`,
+          destination: `images/products`,
           filename: ({ body }, file, cb) => {
             cb(null, `${body.name}_${Date.now()}.png`);
           }
@@ -50,7 +50,7 @@ export class ProductsController {
       'images',
       {
         storage: diskStorage({
-          destination: `${process.env.PATH_IMAGES}/products`,
+          destination: `images/products`,
           filename: ({ body }, file, cb) => {
             cb(null, `${body.name}_${Date.now()}.png`);
           }

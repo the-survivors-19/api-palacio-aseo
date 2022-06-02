@@ -28,9 +28,9 @@ export class AppController {
       'photo',
       {
         storage: diskStorage({
-          destination: `${process.env.PATH_IMAGES}/users`,
+          destination: `images/users`,
           filename: ({ body }, file, cb) => {
-            cb(null, `${body.full_name}_${Date.now()}.png`);
+            cb(null, `${Date.now()}_${body.email}.png`);
           }
         })
       }
