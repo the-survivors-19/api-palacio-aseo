@@ -4,6 +4,8 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { AuthModule } from 'src/auth/auth.module';
 import { CategoriesModule } from 'src/categories/categories.module';
 import { Category } from 'src/categories/entities/category.entity';
+import { MeasurementUnit } from 'src/measurement_units/entities/measurement_unit.entity';
+import { MeasurementUnitsModule } from 'src/measurement_units/measurement_units.module';
 import { Product } from 'src/products/entities/product.entity';
 import { ProductsModule } from 'src/products/products.module';
 import { Provider } from 'src/providers/entities/provider.entity';
@@ -28,7 +30,8 @@ import { AppController } from './app.controller';
         User,
         Provider,
         Category,
-        Product
+        Product,
+        MeasurementUnit
       ]
     }),
     AuthModule,
@@ -36,6 +39,7 @@ import { AppController } from './app.controller';
     ProvidersModule,
     CategoriesModule,
     ProductsModule,
+    MeasurementUnitsModule,
   ],
   controllers: [AppController],
   providers: [],
