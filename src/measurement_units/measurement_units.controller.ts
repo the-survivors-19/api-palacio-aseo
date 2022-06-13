@@ -5,7 +5,7 @@ import { UpdateMeasurementUnitDto } from './dto/update-measurement_unit.dto';
 import { JwtAuthGuard } from 'src/auth/guards';
 
 @UseGuards(JwtAuthGuard)
-@Controller('measurement-units')
+@Controller('api/measurement-units')
 export class MeasurementUnitsController {
   constructor(private readonly measurementUnitsService: MeasurementUnitsService) {}
 

@@ -26,9 +26,11 @@ export class ProductsController {
     )
   )
   async create(@UploadedFile() img_1: Express.Multer.File, @Body() createProductDto: CreateProductDto) {
+    
     if (img_1) {
-      createProductDto.img_1 = `${img_1.destination}/${img_1.filename}`;
+      createProductDto.img_1 = img_1.path;
     }
+    console.log(createProductDto);
     return await this.productsService.create(createProductDto)
       ? { msg: 'se registro el producto correctamente' }
       : { msg: 'se presento un error al crear un producto' };

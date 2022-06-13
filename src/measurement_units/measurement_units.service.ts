@@ -14,7 +14,7 @@ export class MeasurementUnitsService {
   ){}
 
   async create(createMeasurementUnitDto: CreateMeasurementUnitDto) {
-    return await this.measurementUnitRepository.create(createMeasurementUnitDto);
+    return await this.measurementUnitRepository.insert(createMeasurementUnitDto);
   }
 
   async findAll(): Promise<MeasurementUnit[]> {
