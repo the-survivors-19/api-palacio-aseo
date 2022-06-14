@@ -7,6 +7,7 @@ import {
   Param,
   Delete,
   Headers,
+  UseGuards,
 } from '@nestjs/common';
 import { TestimonialsService } from './testimonials.service';
 import { CreateTestimonialDto } from './dto/create-testimonial.dto';
@@ -14,9 +15,11 @@ import { UpdateTestimonialDto } from './dto/update-testimonial.dto';
 import { JwtService } from '@nestjs/jwt';
 import { UsersService } from 'src/users/users.service';
 import { ApiTags } from '@nestjs/swagger';
+import { JwtStrategy } from 'src/auth/strategies';
 
 @ApiTags('testimonials')
 @Controller('api/testimonials')
+@UseGuards(JwtStrategy)
 export class TestimonialsController {
   constructor(
     private readonly jwtService: JwtService,
