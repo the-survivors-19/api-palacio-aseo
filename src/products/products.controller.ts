@@ -8,11 +8,11 @@ import { diskStorage } from 'multer';
 import { ApiTags } from '@nestjs/swagger';
 
 @ApiTags('products')
-@UseGuards(JwtAuthGuard)
 @Controller('api/products')
 export class ProductsController {
   constructor(private readonly productsService: ProductsService) { }
 
+  @UseGuards(JwtAuthGuard)
   @Post()
   @UseInterceptors(
     FileInterceptor(
@@ -48,6 +48,7 @@ export class ProductsController {
     return await this.productsService.findOne(+id);
   }
 
+  @UseGuards(JwtAuthGuard)
   @Patch(':id')
   @UseInterceptors(
     FileInterceptor(
@@ -71,6 +72,7 @@ export class ProductsController {
       : { msg: 'se presento un error al actualizar un producto' };
   }
 
+  @UseGuards(JwtAuthGuard)
   @Delete(':id')
   async remove(@Param('id') id: string) {
     return await this.productsService.remove(+id)
