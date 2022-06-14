@@ -13,7 +13,9 @@ import { CreateTestimonialDto } from './dto/create-testimonial.dto';
 import { UpdateTestimonialDto } from './dto/update-testimonial.dto';
 import { JwtService } from '@nestjs/jwt';
 import { UsersService } from 'src/users/users.service';
+import { ApiTags } from '@nestjs/swagger';
 
+@ApiTags('testimonials')
 @Controller('api/testimonials')
 export class TestimonialsController {
   constructor(

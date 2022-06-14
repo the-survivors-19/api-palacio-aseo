@@ -3,7 +3,9 @@ import { MeasurementUnitsService } from './measurement_units.service';
 import { CreateMeasurementUnitDto } from './dto/create-measurement_unit.dto';
 import { UpdateMeasurementUnitDto } from './dto/update-measurement_unit.dto';
 import { JwtAuthGuard } from 'src/auth/guards';
+import { ApiTags } from '@nestjs/swagger';
 
+@ApiTags('measurement units')
 @UseGuards(JwtAuthGuard)
 @Controller('api/measurement-units')
 export class MeasurementUnitsController {

@@ -3,7 +3,9 @@ import { OffersService } from './offers.service';
 import { CreateOfferDto } from './dto/create-offer.dto';
 import { UpdateOfferDto } from './dto/update-offer.dto';
 import { JwtAuthGuard } from 'src/auth/guards';
+import { ApiTags } from '@nestjs/swagger';
 
+@ApiTags('offers')
 @UseGuards(JwtAuthGuard)
 @Controller('api/offers')
 export class OffersController {

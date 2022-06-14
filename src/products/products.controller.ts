@@ -5,7 +5,9 @@ import { UpdateProductDto } from './dto/update-product.dto';
 import { JwtAuthGuard } from 'src/auth/guards';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { diskStorage } from 'multer';
+import { ApiTags } from '@nestjs/swagger';
 
+@ApiTags('products')
 @UseGuards(JwtAuthGuard)
 @Controller('api/products')
 export class ProductsController {
