@@ -5,7 +5,9 @@ import { UpdateProductDto } from './dto/update-product.dto';
 import { JwtAuthGuard } from 'src/auth/guards';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { diskStorage } from 'multer';
+import { ApiTags } from '@nestjs/swagger';
 
+@ApiTags('products')
 @UseGuards(JwtAuthGuard)
 @Controller('api/products')
 export class ProductsController {
@@ -26,9 +28,11 @@ export class ProductsController {
     )
   )
   async create(@UploadedFile() img_1: Express.Multer.File, @Body() createProductDto: CreateProductDto) {
+    
     if (img_1) {
-      createProductDto.img_1 = `${img_1.destination}/${img_1.filename}`;
+      createProductDto.img_1 = img_1.path;
     }
+    console.log(createProductDto);
     return await this.productsService.create(createProductDto)
       ? { msg: 'se registro el producto correctamente' }
       : { msg: 'se presento un error al crear un producto' };

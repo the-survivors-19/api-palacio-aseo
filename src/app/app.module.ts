@@ -4,10 +4,16 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { AuthModule } from 'src/auth/auth.module';
 import { CategoriesModule } from 'src/categories/categories.module';
 import { Category } from 'src/categories/entities/category.entity';
+import { MeasurementUnit } from 'src/measurement_units/entities/measurement_unit.entity';
+import { MeasurementUnitsModule } from 'src/measurement_units/measurement_units.module';
+import { Offer } from 'src/offers/entities/offer.entity';
+import { OffersModule } from 'src/offers/offers.module';
 import { Product } from 'src/products/entities/product.entity';
 import { ProductsModule } from 'src/products/products.module';
 import { Provider } from 'src/providers/entities/provider.entity';
 import { ProvidersModule } from 'src/providers/providers.module';
+import { Testimonial } from 'src/testimonials/entities/testimonial.entity';
+import { TestimonialsModule } from 'src/testimonials/testimonials.module';
 import { User } from 'src/users/entities/user.entity';
 import { UsersModule } from 'src/users/users.module';
 import { Connection } from 'typeorm';
@@ -28,7 +34,10 @@ import { AppController } from './app.controller';
         User,
         Provider,
         Category,
-        Product
+        Product,
+        MeasurementUnit,
+        Offer,
+        Testimonial,
       ]
     }),
     AuthModule,
@@ -36,6 +45,9 @@ import { AppController } from './app.controller';
     ProvidersModule,
     CategoriesModule,
     ProductsModule,
+    MeasurementUnitsModule,
+    OffersModule,
+    TestimonialsModule,
   ],
   controllers: [AppController],
   providers: [],

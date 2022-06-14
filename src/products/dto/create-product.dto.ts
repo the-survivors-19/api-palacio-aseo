@@ -23,10 +23,6 @@ export class CreateProductDto {
   provider_id: number;
 
   @ApiProperty()
-  @IsOptional()
-  @IsFile({
-    mime: ['image/jpeg', 'image/jpg', 'image/png']
-  })
   img_1: any;
 
   @ApiProperty()

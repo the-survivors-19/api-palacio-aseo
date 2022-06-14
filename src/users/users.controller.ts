@@ -7,7 +7,9 @@ import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { bcrypt, validateConfirmations } from 'src/helpers';
 import { JwtAuthGuard } from 'src/auth/guards';
+import { ApiTags } from '@nestjs/swagger';
 
+@ApiTags('users')
 @Controller('api/users')
 @UseGuards(JwtAuthGuard)
 export class UsersController {

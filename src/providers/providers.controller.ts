@@ -3,7 +3,9 @@ import { ProvidersService } from './providers.service';
 import { CreateProviderDto } from './dto/create-provider.dto';
 import { UpdateProviderDto } from './dto/update-provider.dto';
 import { JwtAuthGuard } from 'src/auth/guards';
+import { ApiTags } from '@nestjs/swagger';
 
+@ApiTags('providers')
 @UseGuards(JwtAuthGuard)
 @Controller('api/providers')
 export class ProvidersController {

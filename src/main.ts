@@ -27,6 +27,14 @@ async function bootstrap() {
     .setDescription(informationAPI.description)
     .setVersion(informationAPI.version)
     .setContact(informationAPI.team, null, informationAPI.emailContact)
+    .addTag('auth', 'Section for the information of authentication')
+    .addTag('users')
+    .addTag('testimonials')
+    .addTag('categories')
+    .addTag('providers')
+    .addTag('measurement units')
+    .addTag('products')
+    .addTag('offers')
     .build();
 
   const swaggerOptions: SwaggerDocumentOptions = {
