@@ -12,6 +12,8 @@ import { Product } from 'src/products/entities/product.entity';
 import { ProductsModule } from 'src/products/products.module';
 import { Provider } from 'src/providers/entities/provider.entity';
 import { ProvidersModule } from 'src/providers/providers.module';
+import { Testimonial } from 'src/testimonials/entities/testimonial.entity';
+import { TestimonialsModule } from 'src/testimonials/testimonials.module';
 import { User } from 'src/users/entities/user.entity';
 import { UsersModule } from 'src/users/users.module';
 import { Connection } from 'typeorm';
@@ -35,6 +37,7 @@ import { AppController } from './app.controller';
         Product,
         MeasurementUnit,
         Offer,
+        Testimonial,
       ]
     }),
     AuthModule,
@@ -44,6 +47,7 @@ import { AppController } from './app.controller';
     ProductsModule,
     MeasurementUnitsModule,
     OffersModule,
+    TestimonialsModule,
   ],
   controllers: [AppController],
   providers: [],
