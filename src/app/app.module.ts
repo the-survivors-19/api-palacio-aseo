@@ -8,6 +8,8 @@ import { MeasurementUnit } from 'src/measurement_units/entities/measurement_unit
 import { MeasurementUnitsModule } from 'src/measurement_units/measurement_units.module';
 import { Offer } from 'src/offers/entities/offer.entity';
 import { OffersModule } from 'src/offers/offers.module';
+import { Pqrs } from 'src/pqrs/entities/pqr.entity';
+import { PqrsModule } from 'src/pqrs/pqrs.module';
 import { Product } from 'src/products/entities/product.entity';
 import { ProductsModule } from 'src/products/products.module';
 import { Provider } from 'src/providers/entities/provider.entity';
@@ -38,6 +40,7 @@ import { AppController } from './app.controller';
         MeasurementUnit,
         Offer,
         Testimonial,
+        Pqrs,
       ]
     }),
     AuthModule,
@@ -48,6 +51,7 @@ import { AppController } from './app.controller';
     MeasurementUnitsModule,
     OffersModule,
     TestimonialsModule,
+    PqrsModule,
   ],
   controllers: [AppController],
   providers: [],

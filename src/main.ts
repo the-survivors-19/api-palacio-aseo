@@ -35,6 +35,7 @@ async function bootstrap() {
     .addTag('measurement units')
     .addTag('products')
     .addTag('offers')
+    .addTag('pqrs')
     .build();
 
   const swaggerOptions: SwaggerDocumentOptions = {

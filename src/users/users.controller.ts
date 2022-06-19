@@ -30,14 +30,13 @@ export class UsersController {
     )
   )
   async create(@UploadedFile() photo: Express.Multer.File, @Body() createUserDto: CreateUserDto) {
+    const existUser = await this.usersService.findEmail(createUserDto.email);
+    if (existUser) throw new BadRequestException({ response: 'This email already exist.' });
     validateConfirmations(createUserDto);
-    if (createUserDto.password != createUserDto.password_confirmation) throw new BadRequestException({ msg: 'la contraseña no coincide con la confirmación' });
     delete createUserDto.password_confirmation;
     if (photo) {
       createUserDto.photo = `${photo.destination}/${photo.filename}`;
     }
-    const existUser = await this.usersService.findEmail(createUserDto.email);
-    if (existUser) throw new BadRequestException({ response: 'This email already exist.' });
     createUserDto.password = await bcrypt.encryptPassword(createUserDto.password);
     if (!this.usersService.create(createUserDto)) throw new BadRequestException({ message: 'Error to create the user.' });
     return {
