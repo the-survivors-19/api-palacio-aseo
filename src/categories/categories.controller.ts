@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards, Put } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { JwtAuthGuard } from 'src/auth/guards';
 import { CategoriesService } from './categories.service';
@@ -30,6 +30,13 @@ export class CategoriesController {
 
   @Patch(':id')
   async update(@Param('id') id: string, @Body() updateCategoryDto: UpdateCategoryDto) {
+    return await this.categoriesService.update(+id, updateCategoryDto) 
+      ? { message: 'se edito la categoria correctamente' } 
+      : { message: 'se presento un fallo al actualizar' };
+  }
+
+  @Put(':id')
+  async updateJava(@Param('id') id: string, @Body() updateCategoryDto: UpdateCategoryDto) {
     return await this.categoriesService.update(+id, updateCategoryDto) 
       ? { message: 'se edito la categoria correctamente' } 
       : { message: 'se presento un fallo al actualizar' };
