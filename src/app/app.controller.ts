@@ -40,7 +40,7 @@ export class AppController {
   )
   async register(@UploadedFile() photo: Express.Multer.File, @Body() createUserDto: CreateUserDto){
     validateConfirmations(createUserDto);
-    if (createUserDto.password != createUserDto.password_confirmation) throw new BadRequestException({ msg: 'la contraseña no coincide con la confirmación' });
+    if (createUserDto.password != createUserDto.password_confirmation) throw new BadRequestException({ message: 'la contraseña no coincide con la confirmación' });
     delete createUserDto.password_confirmation;
     if (photo) {
       createUserDto.photo = `${photo.destination}/${photo.filename}`;

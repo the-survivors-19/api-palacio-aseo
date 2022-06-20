@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, BadRequestException, UploadedFile, Query, Req, UseInterceptors, UseGuards } from '@nestjs/common';
+import { Controller, Get, Post, Put, Body, Patch, Param, Delete, BadRequestException, UploadedFile, Query, Req, UseInterceptors, UseGuards } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { diskStorage } from 'multer';
 import { existsSync, unlinkSync } from 'fs';
@@ -23,7 +23,9 @@ export class UsersController {
         storage: diskStorage({
           destination: `images/users`,
           filename: ({ body }, file, cb) => {
-            cb(null, `${Date.now()}_${body.email}.png`);
+            const regex = /[\.@]/g;
+            const fileName = body.email.replace(regex,'');
+            cb(null, `${fileName}.png`);
           }
         })
       }
@@ -35,10 +37,12 @@ export class UsersController {
     validateConfirmations(createUserDto);
     delete createUserDto.password_confirmation;
     if (photo) {
-      createUserDto.photo = `${photo.destination}/${photo.filename}`;
+      createUserDto.photo = `${photo.path}`;
     }
     createUserDto.password = await bcrypt.encryptPassword(createUserDto.password);
     if (!this.usersService.create(createUserDto)) throw new BadRequestException({ message: 'Error to create the user.' });
+    console.log({createUserDto});
+    
     return {
       message: 'User created successfully.'
     }
@@ -59,6 +63,30 @@ export class UsersController {
 
   @Patch(':id')
   @UseInterceptors(
+    FileInterceptor('photo')
+  )
+  async update(@Param('id') id: number, @UploadedFile() photo: Express.Multer.File, @Body() updateUserDto: UpdateUserDto): Promise<object> {
+    validateConfirmations(updateUserDto);
+    
+    const user = await this.usersService.findOne(id);
+    if (updateUserDto.password) {
+      if (!updateUserDto.old_password) throw new BadRequestException({ message: `Field 'old_password' required` });
+      if (!(await bcrypt.comparePassword(updateUserDto.old_password, user.password))) throw new BadRequestException({ message: 'Password not math.' });
+      updateUserDto.password = await bcrypt.encryptPassword(updateUserDto.password);
+      delete (updateUserDto.old_password);
+    }
+    if (photo) {
+      updateUserDto.photo = photo.buffer.toString();
+    }
+    const res = this.usersService.update(user.id, updateUserDto);
+    if (!res) throw new BadRequestException({ message: 'Ups, was an error in the proccess.' });
+    console.log({ message: `User ${user.email} updated.` });
+    
+    return { message: `User ${user.email} updated.` }
+  }
+
+  @Put(':id')
+  @UseInterceptors(
     FileInterceptor(
       'photo',
       {
@@ -71,7 +99,7 @@ export class UsersController {
       }
     )
   )
-  async update(@Param('id') id: number, @UploadedFile() photo: Express.Multer.File, @Body() updateUserDto: UpdateUserDto): Promise<object> {
+  async updatePut(@Param('id') id: number, @UploadedFile() photo: Express.Multer.File, @Body() updateUserDto: UpdateUserDto): Promise<object> {
     validateConfirmations(updateUserDto);
     const user = await this.usersService.findOne(id);
     if (updateUserDto.password) {
@@ -86,9 +114,11 @@ export class UsersController {
       }
       updateUserDto.photo = `${photo.destination}/${photo.filename}`;
     }
-    const res = this.usersService.update(id, updateUserDto);
+    const res = this.usersService.update(user.id, updateUserDto);
     if (!res) throw new BadRequestException({ message: 'Ups, was an error in the proccess.' });
-    return { message: `User ${id} updated.` }
+    console.log({ message: `User ${user.email} updated.` });
+    
+    return { message: `User ${user.email} updated.` }
   }
 
   @Delete(':id')

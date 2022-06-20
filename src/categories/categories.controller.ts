@@ -14,8 +14,8 @@ export class CategoriesController {
   @Post()
   async create(@Body() createCategoryDto: CreateCategoryDto) {
     return await this.categoriesService.create(createCategoryDto) 
-      ? { msg: 'La categoria fue creada existosamente'} 
-      : { msg: 'Se presento un fallo al crear la categoria' };
+      ? { message: 'La categoria fue creada existosamente'} 
+      : { message: 'Se presento un fallo al crear la categoria' };
   }
 
   @Get()
@@ -31,14 +31,14 @@ export class CategoriesController {
   @Patch(':id')
   async update(@Param('id') id: string, @Body() updateCategoryDto: UpdateCategoryDto) {
     return await this.categoriesService.update(+id, updateCategoryDto) 
-      ? { msg: 'se edito la categoria correctamente' } 
-      : { msg: 'se presento un fallo al actualizar' };
+      ? { message: 'se edito la categoria correctamente' } 
+      : { message: 'se presento un fallo al actualizar' };
   }
 
   @Delete(':id')
   async remove(@Param('id') id: string) {
     return await this.categoriesService.remove(+id)
-    ? { msg: 'se elimino la categoria correctamente' } 
-    : { msg: 'se presento un fallo al eliminar' };
+    ? { message: 'se elimino la categoria correctamente' } 
+    : { message: 'se presento un fallo al eliminar' };
   }
 }

@@ -40,7 +40,7 @@ export class User {
   password: string;
 
   @Column({
-    type: 'text',
+    type: 'longtext',
     nullable: true,
     default: null
   })

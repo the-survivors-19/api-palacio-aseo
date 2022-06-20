@@ -34,8 +34,8 @@ export class ProductsController {
     }
     console.log(createProductDto);
     return await this.productsService.create(createProductDto)
-      ? { msg: 'se registro el producto correctamente' }
-      : { msg: 'se presento un error al crear un producto' };
+      ? { message: 'se registro el producto correctamente' }
+      : { message: 'se presento un error al crear un producto' };
   }
 
   @Get()
@@ -68,15 +68,15 @@ export class ProductsController {
       updateProductDto.img_1 = `${img_1.destination}/${img_1.filename}`;
     }
     return await this.productsService.update(+id, updateProductDto)
-      ? { msg: 'se actualizo el producto correctamente' }
-      : { msg: 'se presento un error al actualizar un producto' };
+      ? { message: 'se actualizo el producto correctamente' }
+      : { message: 'se presento un error al actualizar un producto' };
   }
 
   @UseGuards(JwtAuthGuard)
   @Delete(':id')
   async remove(@Param('id') id: string) {
     return await this.productsService.remove(+id)
-      ? { msg: 'se elimino el producto correctamente' }
-      : { msg: 'se presento un error al eliminar un producto' };
+      ? { message: 'se elimino el producto correctamente' }
+      : { message: 'se presento un error al eliminar un producto' };
   }
 }

@@ -21,7 +21,6 @@ export class AuthService {
 
   async login({ email }: LoginDto) {
     const {
-      id,
       auth_google,
       created_at,
       password,

@@ -15,7 +15,7 @@ export class ProvidersController {
   async create(@Body() createProviderDto: CreateProviderDto) {
     const res = await this.providersService.create(createProviderDto);
     if(!res) throw new BadRequestException();
-    return { status: 201, msg: 'provider registered successful.'};
+    return { status: 201, message: 'provider registered successful.'};
   }
 
   @Get()
@@ -31,7 +31,7 @@ export class ProvidersController {
   @Patch(':id')
   async update(@Param('id') id: string, @Body() updateProviderDto: UpdateProviderDto, @Response() res) {
     const response = {
-      msg: 'provider update'
+      message: 'provider update'
     }
     if(!Object.keys(updateProviderDto).length) return res.status(HttpStatus.ACCEPTED).json(response); 
     const con = await this.providersService.update(+id, updateProviderDto);
@@ -43,6 +43,6 @@ export class ProvidersController {
   async remove(@Param('id') id: string, @Response() response) {
     const res = await this.providersService.remove(+id);
     if(!res) throw new BadRequestException();
-    return response.status(HttpStatus.OK).json({msg: 'provider delete successful.'});
+    return response.status(HttpStatus.OK).json({message: 'provider delete successful.'});
   }
 }

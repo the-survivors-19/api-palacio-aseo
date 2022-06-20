@@ -7,5 +7,5 @@ export const validateConfirmations = (data: object) => {
     const value = element.split('_confirmation')[0];
     if(data[value] != data[element]) errors.push(`${value} no coincide con la confirmación.`);
   });
-  if(errors.length > 0) throw new BadRequestException({msg: errors});
+  if(errors.length > 0) throw new BadRequestException({message: errors});
 }
