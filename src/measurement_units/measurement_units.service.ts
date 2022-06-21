@@ -18,7 +18,7 @@ export class MeasurementUnitsService {
   }
 
   async findAll(): Promise<MeasurementUnit[]> {
-    return await this.measurementUnitRepository.find();
+    return await this.measurementUnitRepository.find({ where: { remove: false } });
   }
 
   async findOne(id: number): Promise<MeasurementUnit> {
@@ -30,6 +30,6 @@ export class MeasurementUnitsService {
   }
 
   async remove(id: number) {
-    return await this.measurementUnitRepository.delete(id);
+    return await this.measurementUnitRepository.update(id, { remove: true });
   }
 }

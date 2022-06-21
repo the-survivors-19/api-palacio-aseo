@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards, Put } from '@nestjs/common';
 import { MeasurementUnitsService } from './measurement_units.service';
 import { CreateMeasurementUnitDto } from './dto/create-measurement_unit.dto';
 import { UpdateMeasurementUnitDto } from './dto/update-measurement_unit.dto';
@@ -28,6 +28,11 @@ export class MeasurementUnitsController {
 
   @Patch(':id')
   async update(@Param('id') id: string, @Body() updateMeasurementUnitDto: UpdateMeasurementUnitDto) {
+    return await this.measurementUnitsService.update(+id, updateMeasurementUnitDto);
+  }
+
+  @Put(':id')
+  async updateJava(@Param('id') id: string, @Body() updateMeasurementUnitDto: UpdateMeasurementUnitDto) {
     return await this.measurementUnitsService.update(+id, updateMeasurementUnitDto);
   }
 

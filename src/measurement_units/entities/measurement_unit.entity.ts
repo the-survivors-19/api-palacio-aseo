@@ -17,4 +17,10 @@ export class MeasurementUnit {
   })
   abbreviation: string;
 
+  @Column({
+    type: 'boolean',
+    nullable: true,
+    default: false
+  })
+  remove: boolean;
 }
