@@ -45,7 +45,7 @@ export class CategoriesController {
   @Delete(':id')
   async remove(@Param('id') id: string) {
     return await this.categoriesService.remove(+id)
-    ? { message: 'se elimino la categoria correctamente' } 
-    : { message: 'se presento un fallo al eliminar' };
+      ? { message: 'se elimino la categoria correctamente' } 
+      : { message: 'se presento un fallo al eliminar' };
   }
 }

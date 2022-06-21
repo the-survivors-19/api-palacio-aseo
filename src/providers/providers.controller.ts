@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards, BadRequestException, Response, HttpStatus } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards, BadRequestException, HttpStatus, Put } from '@nestjs/common';
 import { ProvidersService } from './providers.service';
 import { CreateProviderDto } from './dto/create-provider.dto';
 import { UpdateProviderDto } from './dto/update-provider.dto';
@@ -29,20 +29,23 @@ export class ProvidersController {
   }
 
   @Patch(':id')
-  async update(@Param('id') id: string, @Body() updateProviderDto: UpdateProviderDto, @Response() res) {
-    const response = {
-      message: 'provider update'
-    }
-    if(!Object.keys(updateProviderDto).length) return res.status(HttpStatus.ACCEPTED).json(response); 
-    const con = await this.providersService.update(+id, updateProviderDto);
-    if(!con) throw new BadRequestException();
-    return res.status(HttpStatus.OK).json(response);
+  async update(@Param('id') id: number, @Body() updateProviderDto: UpdateProviderDto) {
+    return await this.providersService.update(id, updateProviderDto) 
+      ? { message: 'Se actualizo el proveedor correctamente.' } 
+      : { message: 'Se presento un fallo al actualizar el proveedor.' }
+  }
+
+  @Put(':id')
+  async updateJava(@Param('id') id: number, @Body() updateProviderDto: UpdateProviderDto) {
+    return await this.providersService.update(id, updateProviderDto) 
+      ? { message: 'Se actualizo el proveedor correctamente.' } 
+      : { message: 'Se presento un fallo al actualizar el proveedor.' }
   }
 
   @Delete(':id')
-  async remove(@Param('id') id: string, @Response() response) {
-    const res = await this.providersService.remove(+id);
-    if(!res) throw new BadRequestException();
-    return response.status(HttpStatus.OK).json({message: 'provider delete successful.'});
+  async remove(@Param('id') id: number) {
+    return await this.providersService.remove(id)
+      ? { message: 'Se elimino el proveedor' }
+      : { message: 'Hubo un fallo al eliminar el proveedor' }
   }
 }
