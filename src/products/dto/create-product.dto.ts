@@ -10,6 +10,10 @@ export class CreateProductDto {
 
   @ApiProperty()
   @IsString()
+  code: string;
+
+  @ApiProperty()
+  @IsString()
   description: string;
 
   @ApiProperty()
@@ -23,6 +27,7 @@ export class CreateProductDto {
   provider_id: number;
 
   @ApiProperty()
+  @IsOptional()
   img_1: any;
 
   @ApiProperty()
@@ -45,11 +50,4 @@ export class CreateProductDto {
     mime: ['image/jpeg', 'image/jpg', 'image/png']
   })
   img_4: any;
-  
-  @ApiProperty()
-  @IsOptional()
-  @IsFile({
-    mime: ['image/jpeg', 'image/jpg', 'image/png']
-  })
-  img_5: any;
 }

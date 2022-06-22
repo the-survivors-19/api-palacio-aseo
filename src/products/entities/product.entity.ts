@@ -7,6 +7,12 @@ export class Product {
   @PrimaryGeneratedColumn()
   id: number;
 
+  @Column({
+    type: 'varchar',
+    length: 8
+  })
+  code: string
+
   @Column({type: 'varchar', length: '45'})
   name: string;
 
@@ -25,18 +31,15 @@ export class Product {
   @Column({type: 'text', nullable: true, default: null})
   img_4: string;
 
-  @Column({type: 'text', nullable: true, default: null})
-  img_5: string;
-
   @ManyToOne(() => Category, category => category.id)
   @JoinColumn({
     name: 'category_id',
   })
-  category_id: number;
+  category_id: Category;
 
-  @ManyToOne(() => Provider, provider => provider.id)
+  @ManyToOne(() => Provider, provider => provider.products)
   @JoinColumn({
     name: 'provider_id',
   })
-  provider_id: number;
+  provider_id: Provider;
 }

@@ -21,7 +21,8 @@ export class ProductsController {
         storage: diskStorage({
           destination: `images/products`,
           filename: ({ body }, file, cb) => {
-            cb(null, `${body.name}_${Date.now()}.png`);
+            const filename = `${body.name}`.replace(' ', '_') + Date.now() + '.png';
+            cb(null, filename);
           }
         })
       }
@@ -48,16 +49,22 @@ export class ProductsController {
     return await this.productsService.findOne(+id);
   }
 
+  @Get('admin')
+  async findProducts() {
+    return await this.productsService.findAll();
+  }
+
   @UseGuards(JwtAuthGuard)
   @Patch(':id')
   @UseInterceptors(
     FileInterceptor(
-      'images',
+      'img_1',
       {
         storage: diskStorage({
           destination: `images/products`,
           filename: ({ body }, file, cb) => {
-            cb(null, `${body.name}_${Date.now()}.png`);
+            const filename = `${body.name}`.replace(' ', '_') + Date.now() + '.png';
+            cb(null, filename);
           }
         })
       }
