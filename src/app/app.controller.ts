@@ -1,4 +1,4 @@
-import { BadRequestException, Body, Controller, Post, UploadedFile, UseGuards, UseInterceptors } from '@nestjs/common';
+import { BadRequestException, Body, Controller, Get, Post, UploadedFile, UseGuards, UseInterceptors } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { ApiTags } from '@nestjs/swagger';
 import { diskStorage } from 'multer';
@@ -8,6 +8,7 @@ import { bcrypt } from 'src/helpers';
 import { validateConfirmations } from 'src/helpers';
 import { CreateUserDto } from 'src/users/dto/create-user.dto';
 import { UsersService } from 'src/users/users.service';
+import { ForgotPasswordDto } from './dto/forgot_password';
 import { LoginDto } from './dto/login.dto';
 
 @ApiTags('auth')
@@ -17,6 +18,11 @@ export class AppController {
     private readonly authService: AuthService,
     private readonly userService: UsersService,
   ){}
+
+  @Post('/recuperar-contrasenia')
+  async forgotPassword(@Body() forgotPasswordDto: ForgotPasswordDto){
+    return await this.authService.forgotPassword(forgotPasswordDto);
+  }
 
   @UseGuards(LocalAuthGuard)
   @Post('/login')
