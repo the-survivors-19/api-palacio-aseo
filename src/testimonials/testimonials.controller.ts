@@ -18,7 +18,7 @@ import { ApiTags } from '@nestjs/swagger';
 import { JwtStrategy } from 'src/auth/strategies';
 
 @ApiTags('testimonials')
-@Controller('api/testimonials')
+@Controller('testimonials')
 @UseGuards(JwtStrategy)
 export class TestimonialsController {
   constructor(

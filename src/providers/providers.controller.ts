@@ -7,7 +7,7 @@ import { ApiTags } from '@nestjs/swagger';
 
 @ApiTags('providers')
 @UseGuards(JwtAuthGuard)
-@Controller('api/providers')
+@Controller('providers')
 export class ProvidersController {
   constructor(private readonly providersService: ProvidersService) {}
 

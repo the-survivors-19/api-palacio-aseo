@@ -7,7 +7,7 @@ import { ApiTags } from '@nestjs/swagger';
 
 @ApiTags('measurement units')
 @UseGuards(JwtAuthGuard)
-@Controller('api/measurement-units')
+@Controller('measurement-units')
 export class MeasurementUnitsController {
   constructor(private readonly measurementUnitsService: MeasurementUnitsService) {}
 

@@ -11,7 +11,7 @@ import { UsersService } from 'src/users/users.service';
 import { LoginDto } from './dto/login.dto';
 
 @ApiTags('auth')
-@Controller('/api')
+@Controller()
 export class AppController {
   constructor(
     private readonly authService: AuthService,

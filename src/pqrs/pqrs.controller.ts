@@ -18,7 +18,7 @@ import { JwtService } from '@nestjs/jwt';
 import { UsersService } from 'src/users/users.service';
 
 @ApiTags('pqrs')
-@Controller('api/pqrs')
+@Controller('pqrs')
 @UseGuards(JwtStrategy)
 export class PqrsController {
   constructor(

@@ -67,7 +67,7 @@ async function bootstrap() {
 
  /*  app.use(cookieParser());
   app.use(csurf({cookie: true})); */
-
+  app.setGlobalPrefix('api');
   await app.listen(port, async () => {
     console.log(`App in: ${await app.getUrl()}`);
   });
