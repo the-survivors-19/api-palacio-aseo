@@ -7,7 +7,7 @@ export class User {
 
   @Column({
     type: 'varchar',
-    length: 45,
+    length: 100,
     nullable: false
   })
   full_name: string;
@@ -21,14 +21,13 @@ export class User {
 
   @Column({
     type: 'varchar',
-    length: 45,
+    length: 100,
     nullable: false
   })
   address: string;
 
   @Column({
-    type: 'varchar',
-    length: 30,
+    type: 'text',
     nullable: false
   })
   email: string;
@@ -40,7 +39,7 @@ export class User {
   password: string;
 
   @Column({
-    type: 'longtext',
+    type: 'longblob',
     nullable: true,
     default: null
   })
