@@ -10,10 +10,6 @@ export class CreateProductDto {
 
   @ApiProperty()
   @IsString()
-  code: string;
-
-  @ApiProperty()
-  @IsString()
   description: string;
 
   @ApiProperty()
@@ -50,4 +46,6 @@ export class CreateProductDto {
     mime: ['image/jpeg', 'image/jpg', 'image/png']
   })
   img_4: any;
+
+  code: string;
 }

@@ -30,8 +30,27 @@ export class ProductsService {
     return (await this.productRepository.save(product)) ? true : false;
   }
 
-  async findAll() {
+  async findAll(params?: object) {
     return await this.productRepository.find({
+      where: {
+        ...params,
+        remove: false
+      },
+      order: {
+        code: 'ASC'
+      },
+      relations: ['category_id', 'provider_id'],
+    });
+  }
+
+  async findAllWithRemoves(params?: object) {
+    return await this.productRepository.find({
+      where: {
+        ...params,
+      },
+      order: {
+        code: 'ASC'
+      },
       relations: ['category_id', 'provider_id'],
     });
   }
@@ -59,6 +78,6 @@ export class ProductsService {
   }
 
   async remove(id: number) {
-    return (await this.productRepository.delete(id)) ? true : false;
+    return (await this.productRepository.update(id, {remove: true})) ? true : false;
   }
 }

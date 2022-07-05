@@ -31,6 +31,12 @@ export class Product {
   @Column({type: 'text', nullable: true, default: null})
   img_4: string;
 
+  @Column({
+    type: 'boolean',
+    default: false
+  })
+  remove: boolean;
+
   @ManyToOne(() => Category, category => category.id)
   @JoinColumn({
     name: 'category_id',
