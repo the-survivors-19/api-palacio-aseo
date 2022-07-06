@@ -36,6 +36,7 @@ async function bootstrap() {
     .addTag('products')
     .addTag('offers')
     .addTag('pqrs')
+    .addTag('weight products')
     .build();
 
   const swaggerOptions: SwaggerDocumentOptions = {

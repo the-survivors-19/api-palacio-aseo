@@ -39,7 +39,7 @@ export class ProductsService {
       order: {
         code: 'ASC'
       },
-      relations: ['category_id', 'provider_id'],
+      relations: ['category_id', 'provider_id', 'weight_products', 'weight_products.measurement_unit_id'],
     });
   }
 

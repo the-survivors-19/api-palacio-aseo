@@ -20,6 +20,8 @@ import { Testimonial } from 'src/testimonials/entities/testimonial.entity';
 import { TestimonialsModule } from 'src/testimonials/testimonials.module';
 import { User } from 'src/users/entities/user.entity';
 import { UsersModule } from 'src/users/users.module';
+import { WeightProduct } from 'src/weight_products/entities/weight_product.entity';
+import { WeightProductsModule } from 'src/weight_products/weight_products.module';
 import { Connection } from 'typeorm';
 import { AppController } from './app.controller';
 
@@ -46,6 +48,7 @@ import { AppController } from './app.controller';
         Offer,
         Testimonial,
         Pqrs,
+        WeightProduct,
       ]
     }),
     AuthModule,
@@ -57,6 +60,7 @@ import { AppController } from './app.controller';
     OffersModule,
     TestimonialsModule,
     PqrsModule,
+    WeightProductsModule
   ],
   controllers: [AppController],
   providers: [],
