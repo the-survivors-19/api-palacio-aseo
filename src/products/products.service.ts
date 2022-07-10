@@ -51,13 +51,13 @@ export class ProductsService {
       order: {
         code: 'ASC'
       },
-      relations: ['category_id', 'provider_id'],
+      relations: ['category_id', 'provider_id', 'weight_products', 'weight_products.measurement_unit_id'],
     });
   }
 
   async findOne(id: number) {
     return await this.productRepository.findOne(id, {
-      relations: ['category_id', 'provider_id'],
+      relations: ['category_id', 'provider_id', 'weight_products', 'weight_products.measurement_unit_id'],
     });
   }
 
