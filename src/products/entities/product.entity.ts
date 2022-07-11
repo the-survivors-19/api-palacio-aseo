@@ -1,5 +1,6 @@
 import { Category } from "src/categories/entities/category.entity";
 import { Provider } from "src/providers/entities/provider.entity";
+import { Rating } from "src/ratings/entities/rating.entity";
 import { WeightProduct } from "src/weight_products/entities/weight_product.entity";
 import { Column, Entity, JoinColumn, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 
@@ -55,4 +56,10 @@ export class Product {
     name: 'weight_products'
   })
   weight_products: WeightProduct[]
+
+  @OneToMany(() => Rating, rating => rating.product_id)
+  @JoinColumn({
+    name: 'ratings'
+  })
+  ratings: Rating[]
 }
