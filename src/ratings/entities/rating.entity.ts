@@ -1,6 +1,6 @@
 import { Product } from "src/products/entities/product.entity";
 import { User } from "src/users/entities/user.entity";
-import { Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
+import { Column, CreateDateColumn, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity('ratings')
 export class Rating {
@@ -32,4 +32,7 @@ export class Rating {
     name: 'user_id'
   })
   user_id: User;
+
+  @CreateDateColumn()
+  created_at: string;
 }

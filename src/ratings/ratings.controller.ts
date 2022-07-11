@@ -10,18 +10,18 @@ import {
 import { RatingsService } from './ratings.service';
 import { CreateRatingDto } from './dto/create-rating.dto';
 import { ApiTags } from '@nestjs/swagger';
-import { JwtStrategy } from 'src/auth/strategies';
 import { JwtService } from '@nestjs/jwt';
+import { JwtAuthGuard } from 'src/auth/guards';
 
 @ApiTags('comments')
 @Controller('ratings')
-@UseGuards(JwtStrategy)
 export class RatingsController {
   constructor(
     private readonly ratingsService: RatingsService,
     private readonly jwtService: JwtService,
   ) {}
-
+  
+  @UseGuards(JwtAuthGuard)
   @Post()
   async create(
     @Body() createRatingDto: CreateRatingDto,
