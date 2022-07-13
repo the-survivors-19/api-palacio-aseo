@@ -7,10 +7,10 @@ import { UpdateCategoryDto } from './dto/update-category.dto';
 
 @ApiTags('categories')
 @Controller('categories')
-@UseGuards(JwtAuthGuard)
 export class CategoriesController {
   constructor(private readonly categoriesService: CategoriesService) {}
 
+  @UseGuards(JwtAuthGuard)
   @Post()
   async create(@Body() createCategoryDto: CreateCategoryDto) {
     return await this.categoriesService.create(createCategoryDto) 
@@ -27,7 +27,8 @@ export class CategoriesController {
   async findOne(@Param('id') id: string) {
     return await this.categoriesService.findOne(+id);
   }
-
+  
+  @UseGuards(JwtAuthGuard)
   @Patch(':id')
   async update(@Param('id') id: string, @Body() updateCategoryDto: UpdateCategoryDto) {
     return await this.categoriesService.update(+id, updateCategoryDto) 
@@ -35,13 +36,15 @@ export class CategoriesController {
       : { message: 'se presento un fallo al actualizar' };
   }
 
+  @UseGuards(JwtAuthGuard)
   @Put(':id')
   async updateJava(@Param('id') id: string, @Body() updateCategoryDto: UpdateCategoryDto) {
     return await this.categoriesService.update(+id, updateCategoryDto) 
       ? { message: 'se edito la categoria correctamente' } 
       : { message: 'se presento un fallo al actualizar' };
   }
-
+  
+  @UseGuards(JwtAuthGuard)
   @Delete(':id')
   async remove(@Param('id') id: string) {
     return await this.categoriesService.remove(+id)

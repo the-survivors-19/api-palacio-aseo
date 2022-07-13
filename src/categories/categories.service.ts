@@ -19,11 +19,15 @@ export class CategoriesService {
   }
 
   async findAll(): Promise<Category[]> {
-    return await this.categoryRepository.find();
+    return await this.categoryRepository.find({
+      relations: ['products']
+    });
   }
 
   async findOne(id: number): Promise<Category> {
-    return await this.categoryRepository.findOne(id);
+    return await this.categoryRepository.findOne(id, {
+      relations: ['products']
+    });
   }
 
   async update(id: number, updateCategoryDto: UpdateCategoryDto): Promise<boolean> {
