@@ -18,6 +18,10 @@ import { Provider } from 'src/providers/entities/provider.entity';
 import { ProvidersModule } from 'src/providers/providers.module';
 import { Rating } from 'src/ratings/entities/rating.entity';
 import { RatingsModule } from 'src/ratings/ratings.module';
+import { Sale } from 'src/sales/entities/sale.entity';
+import { SalesModule } from 'src/sales/sales.module';
+import { SalesDetails } from 'src/sales_details/entities/sales_details.entity';
+import { SalesDetailsModule } from 'src/sales_details/sales_details.module';
 import { Testimonial } from 'src/testimonials/entities/testimonial.entity';
 import { TestimonialsModule } from 'src/testimonials/testimonials.module';
 import { User } from 'src/users/entities/user.entity';
@@ -52,6 +56,8 @@ import { AppController } from './app.controller';
         Pqrs,
         WeightProduct,
         Rating,
+        Sale,
+        SalesDetails
       ]
     }),
     AuthModule,
@@ -64,7 +70,9 @@ import { AppController } from './app.controller';
     TestimonialsModule,
     PqrsModule,
     WeightProductsModule,
-    RatingsModule
+    RatingsModule,
+    SalesModule,
+    SalesDetailsModule,
   ],
   controllers: [AppController],
   providers: [],
