@@ -59,6 +59,11 @@ export class SalesController {
     return (Boolean)(await this.salesService.update(sale_id, { total }));
   }
 
+  @Get('/user/:id')
+  async findForUser(@Param('id') id: string){
+    return await this.salesService.findAll({ user: id })
+  }
+
   @Get()
   findAll() {
     return this.salesService.findAll();

@@ -12,8 +12,8 @@ export class SalesService {
     @InjectRepository(Sale)
     private readonly saleRepository: Repository<Sale>,
     private readonly userService: UsersService,
-  ){}
-  
+  ) {}
+
   async create(createSaleDto: InsertSaleDto): Promise<number> {
     const { email_user, ...data } = createSaleDto;
     const user = await this.userService.findEmail(email_user);
@@ -22,8 +22,12 @@ export class SalesService {
     return (await this.saleRepository.save(sale)).id;
   }
 
-  findAll() {
-    return `This action returns all sales`;
+  async findAll(where?: object): Promise<Sale[]> {
+    return await this.saleRepository.find({
+      where: {
+        ...where,
+      },
+    });
   }
 
   async findOne(id: number): Promise<Sale> {
@@ -31,6 +35,6 @@ export class SalesService {
   }
 
   async update(id: number, updateSaleDto: UpdateSaleDto): Promise<boolean> {
-    return (Boolean) (await this.saleRepository.update(id, updateSaleDto));
+    return Boolean(await this.saleRepository.update(id, updateSaleDto));
   }
 }
