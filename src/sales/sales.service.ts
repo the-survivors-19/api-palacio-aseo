@@ -27,6 +27,7 @@ export class SalesService {
       where: {
         ...where,
       },
+      relations: ['sales_details']
     });
   }
 

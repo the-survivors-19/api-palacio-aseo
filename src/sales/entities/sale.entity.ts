@@ -43,9 +43,9 @@ export class Sale {
   })
   user: User;
 
-  /* @OneToMany(() => SalesDetails, salesDetails => salesDetails.sale)
+  @OneToMany(() => SalesDetails, salesDetails => salesDetails.sale)
   @JoinColumn({
-    name: ''
+    name: 'sales_details'
   })
-  details: SalesDetails[]; */
+  sales_details: SalesDetails[];
 }
