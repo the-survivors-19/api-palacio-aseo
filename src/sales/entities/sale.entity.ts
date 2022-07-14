@@ -2,6 +2,7 @@ import { SalesDetails } from 'src/sales_details/entities/sales_details.entity';
 import { User } from 'src/users/entities/user.entity';
 import {
   Column,
+  CreateDateColumn,
   Entity,
   JoinColumn,
   ManyToOne,
@@ -48,4 +49,7 @@ export class Sale {
     name: 'sales_details'
   })
   sales_details: SalesDetails[];
+
+  @CreateDateColumn()
+  date: string;
 }

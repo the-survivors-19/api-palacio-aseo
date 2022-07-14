@@ -39,13 +39,6 @@ export class User {
   password: string;
 
   @Column({
-    type: 'longblob',
-    nullable: true,
-    default: null
-  })
-  photo: string;
-
-  @Column({
     type: 'boolean',
     default: false
   })

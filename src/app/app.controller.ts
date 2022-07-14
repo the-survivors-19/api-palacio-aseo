@@ -31,26 +31,11 @@ export class AppController {
   }
 
   @Post('/register')
-  @UseInterceptors(
-    FileInterceptor(
-      'photo',
-      {
-        storage: diskStorage({
-          destination: `images/users`,
-          filename: ({ body }, file, cb) => {
-            cb(null, `${Date.now()}_${body.email}.png`);
-          }
-        })
-      }
-    )
-  )
-  async register(@UploadedFile() photo: Express.Multer.File, @Body() createUserDto: CreateUserDto){
+  async register(@Body() createUserDto: CreateUserDto){
     validateConfirmations(createUserDto);
     if (createUserDto.password != createUserDto.password_confirmation) throw new BadRequestException({ message: 'la contraseña no coincide con la confirmación' });
     delete createUserDto.password_confirmation;
-    if (photo) {
-      createUserDto.photo = `${photo.destination}/${photo.filename}`;
-    }
+
     const existUser = await this.userService.findEmail(createUserDto.email);
     if (existUser) throw new BadRequestException({ response: 'This email already exist.' });
     createUserDto.password = await bcrypt.encryptPassword(createUserDto.password);

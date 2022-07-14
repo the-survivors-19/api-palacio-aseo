@@ -16,29 +16,12 @@ export class UsersController {
   constructor(private readonly usersService: UsersService) { }
 
   @Post()
-  @UseInterceptors(
-    FileInterceptor(
-      'photo',
-      {
-        storage: diskStorage({
-          destination: `images/users`,
-          filename: ({ body }, file, cb) => {
-            const regex = /[\.@]/g;
-            const fileName = body.email.replace(regex,'');
-            cb(null, `${fileName}.png`);
-          }
-        })
-      }
-    )
-  )
-  async create(@UploadedFile() photo: Express.Multer.File, @Body() createUserDto: CreateUserDto) {
+  async create(@Body() createUserDto: CreateUserDto) {
     const existUser = await this.usersService.findEmail(createUserDto.email);
     if (existUser) throw new BadRequestException({ response: 'This email already exist.' });
     validateConfirmations(createUserDto);
     delete createUserDto.password_confirmation;
-    if (photo) {
-      createUserDto.photo = `${photo.path}`;
-    }
+
     createUserDto.password = await bcrypt.encryptPassword(createUserDto.password);
     if (!this.usersService.create(createUserDto)) throw new BadRequestException({ message: 'Error to create the user.' });
     console.log({createUserDto});
@@ -62,10 +45,7 @@ export class UsersController {
   }
 
   @Patch(':id')
-  @UseInterceptors(
-    FileInterceptor('photo')
-  )
-  async update(@Param('id') id: number, @UploadedFile() photo: Express.Multer.File, @Body() updateUserDto: UpdateUserDto): Promise<object> {
+  async update(@Param('id') id: number, @Body() updateUserDto: UpdateUserDto): Promise<object> {
     validateConfirmations(updateUserDto);
     
     const user = await this.usersService.findOne(id);
@@ -74,9 +54,6 @@ export class UsersController {
       if (!(await bcrypt.comparePassword(updateUserDto.old_password, user.password))) throw new BadRequestException({ message: 'Password not math.' });
       updateUserDto.password = await bcrypt.encryptPassword(updateUserDto.password);
       delete (updateUserDto.old_password);
-    }
-    if (photo) {
-      updateUserDto.photo = photo.buffer.toString();
     }
     const res = this.usersService.update(user.id, updateUserDto);
     if (!res) throw new BadRequestException({ message: 'Ups, was an error in the proccess.' });
@@ -86,20 +63,7 @@ export class UsersController {
   }
 
   @Put(':id')
-  @UseInterceptors(
-    FileInterceptor(
-      'photo',
-      {
-        storage: diskStorage({
-          destination: `images/users`,
-          filename: ({ body }, file, cb) => {
-            cb(null, `${Date.now()}_${body.email}.png`);
-          }
-        })
-      }
-    )
-  )
-  async updatePut(@Param('id') id: number, @UploadedFile() photo: Express.Multer.File, @Body() updateUserDto: UpdateUserDto): Promise<object> {
+  async updatePut(@Param('id') id: number, @Body() updateUserDto: UpdateUserDto): Promise<object> {
     validateConfirmations(updateUserDto);
     const user = await this.usersService.findOne(id);
     if (updateUserDto.password) {
@@ -107,12 +71,6 @@ export class UsersController {
       if (!(await bcrypt.comparePassword(updateUserDto.old_password, user.password))) throw new BadRequestException({ message: 'Password not math.' });
       updateUserDto.password = await bcrypt.encryptPassword(updateUserDto.password);
       delete (updateUserDto.old_password);
-    }
-    if (photo) {
-      if (user.photo && existsSync(user.photo)) {
-        await unlinkSync(user.photo);
-      }
-      updateUserDto.photo = `${photo.destination}/${photo.filename}`;
     }
     const res = this.usersService.update(user.id, updateUserDto);
     if (!res) throw new BadRequestException({ message: 'Ups, was an error in the proccess.' });

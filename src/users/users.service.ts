@@ -27,8 +27,7 @@ export class UsersService {
   }
 
   async update(id: number, updateUserDto: UpdateUserDto) {
-    const { photo, ...other } = updateUserDto;
-    console.log(photo);
+    const other = updateUserDto;
     return await this.userRepository.update(id, other) ? true : false;
   }
 

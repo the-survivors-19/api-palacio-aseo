@@ -32,10 +32,4 @@ export class CreateUserDto {
   @MinLength(8)
   password_confirmation: string;
 
-  @ApiProperty()
-  @IsOptional()
-  @IsFile({
-    mime: ['image/jpeg', 'image/jpg', 'image/png']
-  })
-  photo: any;
 }

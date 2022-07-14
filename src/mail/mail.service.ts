@@ -4,7 +4,7 @@ import * as fs from 'fs';
 import { join } from 'path';
 
 interface DataEmail {
-  template: 'forgot_password';
+  template: 'forgot_password' | 'pendiente_shop';
   email: string;
   subject: string;
   context: object;

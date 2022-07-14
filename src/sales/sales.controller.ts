@@ -17,6 +17,8 @@ import { CreateSaleDetailDto } from 'src/sales_details/dto/create-sale-detail.dt
 import { ApiTags } from '@nestjs/swagger';
 import { JwtAuthGuard } from 'src/auth/guards';
 import { JwtService } from '@nestjs/jwt';
+import { WeightProductsService } from 'src/weight_products/weight_products.service';
+import { MailService } from 'src/mail/mail.service';
 
 @ApiTags('sales')
 @Controller('sales')
@@ -26,6 +28,8 @@ export class SalesController {
     private readonly salesService: SalesService,
     private readonly jwtService: JwtService,
     private readonly salesDetailsService: SalesDetailsService,
+    private readonly productService: WeightProductsService,
+    private readonly mailService: MailService,
   ) {}
 
   @Post()
@@ -53,9 +57,12 @@ export class SalesController {
       }
       
       await this.salesDetailsService.create(saleDetail);
+      const { stock } = await this.productService.findOne(product.id);
+      await this.productService.update(product.id, { stock: (stock - saleDetail.quantity) });
 
       total += (product.price * product.quantity)
     }
+    // await this.mailService.sendEmail({ email: data.email_user, context: { product: JSON.parse(JSON.stringify(createSaleDto.products)) }, subject: 'Tu pedido está pendiente', template: 'pendiente_shop' })
     return (Boolean)(await this.salesService.update(sale_id, { total }));
   }
 

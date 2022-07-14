@@ -27,7 +27,10 @@ export class SalesService {
       where: {
         ...where,
       },
-      relations: ['sales_details']
+      order: {
+        date: 'DESC'
+      },
+      relations: ['sales_details', 'sales_details.product', 'sales_details.product.product_id']
     });
   }
 

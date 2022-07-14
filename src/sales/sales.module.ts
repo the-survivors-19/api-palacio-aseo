@@ -7,6 +7,8 @@ import { SalesDetailsModule } from 'src/sales_details/sales_details.module';
 import { JwtModule } from '@nestjs/jwt';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { UsersModule } from 'src/users/users.module';
+import { WeightProductsModule } from 'src/weight_products/weight_products.module';
+import { MailModule } from 'src/mail/mail.module';
 
 @Module({
   imports: [
@@ -23,6 +25,8 @@ import { UsersModule } from 'src/users/users.module';
     }),
     SalesDetailsModule,
     UsersModule,
+    WeightProductsModule,
+    MailModule,
   ],
   controllers: [SalesController],
   providers: [SalesService],
