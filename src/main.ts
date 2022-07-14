@@ -1,7 +1,5 @@
 import { NestFactory } from '@nestjs/core';
 import { NestExpressApplication } from '@nestjs/platform-express';
-import * as cookieParser from 'cookie-parser';
-import * as csurf from 'csurf';
 import { AppModule } from './app/app.module';
 import { SwaggerModule, DocumentBuilder, SwaggerDocumentOptions } from '@nestjs/swagger';
 import { RedocModule, RedocOptions } from 'nestjs-redoc';
@@ -15,7 +13,6 @@ const informationAPI = {
   team: 'The Survivors 19'
 }
 
-
 async function bootstrap() {
   const port = parseInt(process.env.PORT) || 3000;
   const app = await NestFactory.create<NestExpressApplication>(AppModule, {
@@ -27,16 +24,6 @@ async function bootstrap() {
     .setDescription(informationAPI.description)
     .setVersion(informationAPI.version)
     .setContact(informationAPI.team, null, informationAPI.emailContact)
-    .addTag('auth', 'Section for the information of authentication')
-    .addTag('users')
-    .addTag('testimonials')
-    .addTag('categories')
-    .addTag('providers')
-    .addTag('measurement units')
-    .addTag('products')
-    .addTag('offers')
-    .addTag('pqrs')
-    .addTag('weight products')
     .build();
 
   const swaggerOptions: SwaggerDocumentOptions = {
