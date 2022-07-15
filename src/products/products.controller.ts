@@ -1,38 +1,33 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards, UseInterceptors, UploadedFile, Put } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards, UseInterceptors, UploadedFile, Put, UploadedFiles } from '@nestjs/common';
 import { ProductsService } from './products.service';
 import { CreateProductDto } from './dto/create-product.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
 import { JwtAuthGuard } from 'src/auth/guards';
-import { FileInterceptor } from '@nestjs/platform-express';
-import { diskStorage } from 'multer';
+import { FileInterceptor, FilesInterceptor } from '@nestjs/platform-express';
 import { ApiTags } from '@nestjs/swagger';
+import { CloudinaryService } from 'src/cloudinary/cloudinary.service';
 
 @ApiTags('products')
 @Controller('products')
 export class ProductsController {
   constructor(
     private readonly productsService: ProductsService,
+    private readonly cloudinaryService: CloudinaryService,
   ) { }
 
+  @UseGuards(JwtAuthGuard)
   @Post()
   @UseInterceptors(
-    FileInterceptor(
-      'img_1',
-      {
-        storage: diskStorage({
-          destination: `images/products`,
-          filename: ({ body }, file, cb) => {
-            const filename = `${body.name}`.replace(' ', '_') + Date.now() + '.png';
-            cb(null, filename);
-          }
-        })
-      }
-    )
+    FilesInterceptor('images')
   )
-  async create(@UploadedFile() img_1: Express.Multer.File, @Body() createProductDto: CreateProductDto) {
+  async create(@UploadedFiles() images: Array<Express.Multer.File>, @Body() createProductDto: CreateProductDto) {
     const consecutive = (await this.productsService.findAll({category_id: createProductDto.category_id})).length + 1;
     createProductDto.code = `${ createProductDto.category_id }${ consecutive }`;
-    createProductDto.img_1 = '';
+    console.log(images);
+    
+    for(let image in images){
+      createProductDto[`img_${parseInt(image)+1}`] = await (await this.cloudinaryService.uploadImage(images[image])).secure_url;
+    }
     /* if (img_1) {
       createProductDto.img_1 = img_1.path;
     } */
@@ -57,24 +52,14 @@ export class ProductsController {
     return await this.productsService.findAll();
   }
 
+  @UseGuards(JwtAuthGuard)
   @Patch(':id')
   @UseInterceptors(
-    FileInterceptor(
-      'img_1',
-      {
-        storage: diskStorage({
-          destination: `images/products`,
-          filename: ({ body }, file, cb) => {
-            const filename = `${body.name}`.replace(' ', '_') + Date.now() + '.png';
-            cb(null, filename);
-          }
-        })
-      }
-    )
+    FilesInterceptor('images')
   )
-  async update(@UploadedFile() img_1: Express.Multer.File, @Param('id') id: string, @Body() updateProductDto: UpdateProductDto) {
-    if (img_1) {
-      updateProductDto.img_1 = `${img_1.destination}/${img_1.filename}`;
+  async update(@UploadedFiles() images: Express.Multer.File, @Param('id') id: string, @Body() updateProductDto: UpdateProductDto) {
+    for(let image in images){
+      updateProductDto[`img_${parseInt(image)+1}`] = await (await this.cloudinaryService.uploadImage(images[image])).secure_url;
     }
     const currentCategory = updateProductDto.category_id ?? null;
     const lastCategory = (await this.productsService.findOne(+id)).category_id.id;
@@ -88,24 +73,14 @@ export class ProductsController {
       : { message: 'se presento un error al actualizar un producto' };
   }
 
+  @UseGuards(JwtAuthGuard)
   @Put(':id')
   @UseInterceptors(
-    FileInterceptor(
-      'img_1',
-      {
-        storage: diskStorage({
-          destination: `images/products`,
-          filename: ({ body }, file, cb) => {
-            const filename = `${body.name}`.replace(' ', '_') + Date.now() + '.png';
-            cb(null, filename);
-          }
-        })
-      }
-    )
+    FilesInterceptor('images')
   )
-  async updateJava(@UploadedFile() img_1: Express.Multer.File, @Param('id') id: string, @Body() updateProductDto: UpdateProductDto) {
-    if (img_1) {
-      updateProductDto.img_1 = `${img_1.destination}/${img_1.filename}`;
+  async updateJava(@UploadedFiles() images: Express.Multer.File, @Param('id') id: string, @Body() updateProductDto: UpdateProductDto) {
+    for(let image in images){
+      updateProductDto[`img_${parseInt(image)+1}`] = await (await this.cloudinaryService.uploadImage(images[image])).secure_url;
     }
     const currentCategory = updateProductDto.category_id ?? null;
     const lastCategory = (await this.productsService.findOne(+id)).category_id.id;
@@ -119,6 +94,7 @@ export class ProductsController {
       : { message: 'se presento un error al actualizar un producto' };
   }
 
+  @UseGuards(JwtAuthGuard)
   @Delete(':id')
   async remove(@Param('id') id: string) {
     return await this.productsService.remove(+id)
