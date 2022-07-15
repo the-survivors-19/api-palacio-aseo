@@ -32,8 +32,8 @@ export class ProductsController {
     } */
     console.log(createProductDto);
     return await this.productsService.create(createProductDto)
-      ? { message: 'se registro el producto correctamente' }
-      : { message: 'se presento un error al crear un producto' };
+      ? 'se registro el producto correctamente'
+      : 'se presento un error al crear un producto';
   }
 
   @Get()
@@ -68,8 +68,8 @@ export class ProductsController {
       updateProductDto.code = `${ updateProductDto.category_id }${ consecutive }`;
     }
     return await this.productsService.update(+id, updateProductDto)
-      ? { message: 'se actualizo el producto correctamente' }
-      : { message: 'se presento un error al actualizar un producto' };
+      ? 'se actualizo el producto correctamente' 
+      : 'se presento un error al actualizar un producto';
   }
 
   @Put(':id')
@@ -88,8 +88,8 @@ export class ProductsController {
       updateProductDto.code = `${ updateProductDto.category_id }${ consecutive }`;
     }
     return await this.productsService.update(+id, updateProductDto)
-      ? { message: 'se actualizo el producto correctamente' }
-      : { message: 'se presento un error al actualizar un producto' };
+      ? 'se actualizo el producto correctamente'
+      : 'se presento un error al actualizar un producto';
   }
 
   @UseGuards(JwtAuthGuard)
