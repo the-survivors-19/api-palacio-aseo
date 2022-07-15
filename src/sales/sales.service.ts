@@ -39,6 +39,6 @@ export class SalesService {
   }
 
   async update(id: number, updateSaleDto: UpdateSaleDto): Promise<boolean> {
-    return Boolean(await this.saleRepository.update(id, updateSaleDto));
+    return Boolean(await this.saleRepository.update(id, { current_state: updateSaleDto.state}));
   }
 }
