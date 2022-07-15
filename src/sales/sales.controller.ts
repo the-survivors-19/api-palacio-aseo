@@ -3,15 +3,14 @@ import {
   Get,
   Post,
   Body,
-  Patch,
   Param,
   Headers,
   UseGuards,
+  Put,
 } from '@nestjs/common';
 import { SalesService } from './sales.service';
 import { CreateSaleDto } from './dto/create-sale.dto';
 import { UpdateSaleDto } from './dto/update-sale.dto';
-import { InsertSaleDto } from './dto/insert-sale.dto';
 import { SalesDetailsService } from 'src/sales_details/sales_details.service';
 import { CreateSaleDetailDto } from 'src/sales_details/dto/create-sale-detail.dto';
 import { ApiTags } from '@nestjs/swagger';
@@ -34,13 +33,13 @@ export class SalesController {
 
   @Post()
   async create(@Body() createSaleDto: CreateSaleDto, @Headers('authorization') token) {
-    const state = createSaleDto.state ?? 'PENDIENTE';
+    const state = createSaleDto.state;
     const tokenJwt = token.split(' ')[1];
     const dataToken = this.jwtService.decode(tokenJwt);
     let total = 0;
     const data = {
       total,
-      current_state: state,
+      state,
       email_user: dataToken['email'],
       name_client: createSaleDto.name_client,
       address: createSaleDto.address
@@ -81,7 +80,7 @@ export class SalesController {
     return this.salesService.findOne(+id);
   }
 
-  @Patch(':id')
+  @Put(':id')
   update(@Param('id') id: string, @Body() updateSaleDto: UpdateSaleDto) {
     return this.salesService.update(+id, updateSaleDto);
   }

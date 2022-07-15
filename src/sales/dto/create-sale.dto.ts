@@ -19,6 +19,6 @@ export class CreateSaleDto {
 
   @ApiProperty()
   @IsString()
-  address;
+  address: string;
 
 }
