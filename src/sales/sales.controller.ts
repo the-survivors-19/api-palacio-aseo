@@ -80,9 +80,27 @@ export class SalesController {
     return this.salesService.findOne(+id);
   }
 
+  @Get('products/:id')
+  async findProducts(@Param('id') id: string){
+    const products = [];
+    const data = await this.salesDetailsService.find(+id);
+    let name;
+    for(let d of data){
+      name = d.product.product_id.name;
+      name += ` (`;
+      name += d.product.quantity;
+      name += d.product.measurement_unit_id.abbreviation;
+      name += `) x`;
+      name += d.quantity
+      products.push({name, price: d.price, quantity: d.quantity})
+    }
+    return products;
+  }
+
   @Put(':id')
-  update(@Param('id') id: string, @Body() updateSaleDto: UpdateSaleDto) {
-    return this.salesService.update(+id, updateSaleDto);
+  async update(@Param('id') id: string, @Body() updateSaleDto: UpdateSaleDto): Promise<String> {
+    const res = await this.salesService.update(+id, updateSaleDto);
+    return res ? 'Estado cambiado satisfactoriamente' : 'Se presento un error al cambiar el estado';
   }
 
 }

@@ -28,7 +28,7 @@ export class SalesService {
         ...where,
       },
       order: {
-        date: 'DESC'
+        id: "DESC"
       },
       relations: ['sales_details', 'sales_details.product', 'sales_details.product.product_id']
     });
@@ -39,6 +39,6 @@ export class SalesService {
   }
 
   async update(id: number, updateSaleDto: UpdateSaleDto): Promise<boolean> {
-    return Boolean(await this.saleRepository.update(id, { current_state: updateSaleDto.state}));
+    return (Boolean) (await this.saleRepository.update(id, { current_state: updateSaleDto.state}));
   }
 }
