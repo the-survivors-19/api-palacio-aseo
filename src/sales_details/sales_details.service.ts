@@ -22,4 +22,13 @@ export class SalesDetailsService {
     
     return (Boolean) (await this.saleDetailRepository.save(saleDetail));
   }
+
+  async find(id: number): Promise<SalesDetails[]>{
+    return await this.saleDetailRepository.find({
+      where: {
+        sale: id
+      },
+      relations: ['product', 'product.product_id', 'product.measurement_unit_id']
+    })
+  }
 }
