@@ -15,7 +15,6 @@ export class ProductsController {
     private readonly cloudinaryService: CloudinaryService,
   ) { }
 
-  @UseGuards(JwtAuthGuard)
   @Post()
   @UseInterceptors(
     FilesInterceptor('images')
@@ -73,7 +72,6 @@ export class ProductsController {
       : { message: 'se presento un error al actualizar un producto' };
   }
 
-  @UseGuards(JwtAuthGuard)
   @Put(':id')
   @UseInterceptors(
     FilesInterceptor('images')
