@@ -39,10 +39,10 @@ export class SalesController {
     let total = 0;
     const data = {
       total,
-      state,
       email_user: dataToken['email'],
       name_client: createSaleDto.name_client,
-      address: createSaleDto.address
+      address: createSaleDto.address,
+      current_state: state
     }
     const sale_id = await this.salesService.create(data);
     const sale = await this.salesService.findOne(sale_id);

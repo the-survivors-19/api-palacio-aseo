@@ -19,6 +19,9 @@ export class SalesService {
     const user = await this.userService.findEmail(email_user);
     const sale = await this.saleRepository.create(data);
     sale.user = user;
+    sale.current_state = data.current_state;
+    console.log(data);
+    
     return (await this.saleRepository.save(sale)).id;
   }
 
