@@ -9,6 +9,9 @@ export class Category {
   @Column({type: 'varchar', length: 20})
   description: string;
 
+  @Column({type: 'boolean', default: false})
+  remove: boolean;
+
   @OneToMany(() => Product, product => product.category_id)
   @JoinColumn({
     name: 'products'

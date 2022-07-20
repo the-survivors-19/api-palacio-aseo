@@ -20,12 +20,18 @@ export class CategoriesService {
 
   async findAll(): Promise<Category[]> {
     return await this.categoryRepository.find({
+      where: {
+        remove: false,
+      },
       relations: ['products']
     });
   }
 
   async findOne(id: number): Promise<Category> {
     return await this.categoryRepository.findOne(id, {
+      where: {
+        remove: false,
+      },
       relations: ['products']
     });
   }
@@ -35,6 +41,6 @@ export class CategoriesService {
   }
 
   async remove(id: number): Promise<boolean> {
-    return await this.categoryRepository.delete(id) ? true : false;
+    return await this.categoryRepository.update(id, { remove: true }) ? true : false;
   }
 }
