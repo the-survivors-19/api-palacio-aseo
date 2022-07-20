@@ -72,7 +72,7 @@ export class ProductsController {
       : 'se presento un error al actualizar un producto';
   }
 
-  @Put(':id')
+  @Post(':id')
   @UseInterceptors(
     FilesInterceptor('images')
   )
@@ -82,7 +82,7 @@ export class ProductsController {
     }
     const currentCategory = updateProductDto.category_id ?? null;
     const lastCategory = (await this.productsService.findOne(+id)).category_id.id;
-    if(lastCategory != currentCategory){
+    if(currentCategory != null && lastCategory != currentCategory){
       const products = await this.productsService.findAllWithRemoves({category_id: updateProductDto.category_id});
       const consecutive = products.length > 0 ? parseInt(products[products.length - 1].code.substring(updateProductDto.category_id.toString().length)) + 1 : 1;
       updateProductDto.code = `${ updateProductDto.category_id }${ consecutive }`;
