@@ -1,8 +1,6 @@
-import { States } from "../entities/sale.entity";
-
 export class InsertSaleDto {
   total: number;
-  current_state: States;
+  current_state: string;
   email_user: string;
   name_client: string;
   address: string;
