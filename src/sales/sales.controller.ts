@@ -33,7 +33,7 @@ export class SalesController {
 
   @Post()
   async create(@Body() createSaleDto: CreateSaleDto, @Headers('authorization') token) {
-    const state = createSaleDto.state;
+    const state = createSaleDto.state ?? 'PENDIENTE';
     const tokenJwt = token.split(' ')[1];
     const dataToken = this.jwtService.decode(tokenJwt);
     let total = 0;

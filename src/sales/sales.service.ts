@@ -16,6 +16,8 @@ export class SalesService {
 
   async create(createSaleDto: InsertSaleDto): Promise<number> {
     const { email_user, ...data } = createSaleDto;
+    console.log(data);
+    
     const user = await this.userService.findEmail(email_user);
     const sale = await this.saleRepository.create(data);
     sale.user = user;

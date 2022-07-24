@@ -35,6 +35,7 @@ export class Sale {
     type: 'enum',
     enum: ['PENDIENTE', 'EMPACANDO', 'ENVIADO', 'ENTREGADO'],
     default: 'PENDIENTE',
+    nullable: true,
   })
   current_state: string;
 
