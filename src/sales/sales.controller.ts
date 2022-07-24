@@ -18,6 +18,7 @@ import { JwtAuthGuard } from 'src/auth/guards';
 import { JwtService } from '@nestjs/jwt';
 import { WeightProductsService } from 'src/weight_products/weight_products.service';
 import { MailService } from 'src/mail/mail.service';
+import { States } from './entities/sale.entity';
 
 @ApiTags('sales')
 @Controller('sales')
@@ -33,7 +34,7 @@ export class SalesController {
 
   @Post()
   async create(@Body() createSaleDto: CreateSaleDto, @Headers('authorization') token) {
-    const state = createSaleDto.state ?? 'PENDIENTE';
+    const state: States = createSaleDto.state as States ?? 'PENDIENTE' as States;
     const tokenJwt = token.split(' ')[1];
     const dataToken = this.jwtService.decode(tokenJwt);
     let total = 0;

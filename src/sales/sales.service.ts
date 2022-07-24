@@ -4,7 +4,7 @@ import { UsersService } from 'src/users/users.service';
 import { Repository } from 'typeorm';
 import { InsertSaleDto } from './dto/insert-sale.dto';
 import { UpdateSaleDto } from './dto/update-sale.dto';
-import { Sale } from './entities/sale.entity';
+import { Sale, States } from './entities/sale.entity';
 
 @Injectable()
 export class SalesService {
@@ -44,6 +44,6 @@ export class SalesService {
   }
 
   async update(id: number, updateSaleDto: UpdateSaleDto): Promise<boolean> {
-    return (Boolean) (await this.saleRepository.update(id, { current_state: updateSaleDto.state}));
+    return (Boolean) (await this.saleRepository.update(id, { current_state: updateSaleDto.state as States}));
   }
 }

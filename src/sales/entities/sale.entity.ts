@@ -10,6 +10,8 @@ import {
   PrimaryGeneratedColumn,
 } from 'typeorm';
 
+export type States = 'PENDIENTE' | 'EMPACANDO' | 'ENVIADO' | 'ENTREGADO';
+
 @Entity('sales')
 export class Sale {
   @PrimaryGeneratedColumn()
@@ -32,12 +34,11 @@ export class Sale {
   address: string;
 
   @Column({
-    type: 'enum',
-    enum: ['PENDIENTE', 'EMPACANDO', 'ENVIADO', 'ENTREGADO'],
+    type: 'varchar',
+    length: 20,
     default: 'PENDIENTE',
-    nullable: true,
   })
-  current_state: string;
+  current_state: States;
 
   @ManyToOne(() => User, (user) => user.id)
   @JoinColumn({
