@@ -21,7 +21,6 @@ import { MailService } from 'src/mail/mail.service';
 
 @ApiTags('sales')
 @Controller('sales')
-@UseGuards(JwtAuthGuard)
 export class SalesController {
   constructor(
     private readonly salesService: SalesService,
