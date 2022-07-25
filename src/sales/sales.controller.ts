@@ -42,7 +42,7 @@ export class SalesController {
       email_user: dataToken['email'],
       name_client: createSaleDto.name_client,
       address: createSaleDto.address,
-      current_state: state
+      state: state
     }
     const sale_id = await this.salesService.create(data);
     const sale = await this.salesService.findOne(sale_id);
@@ -99,7 +99,7 @@ export class SalesController {
 
   @Put(':id')
   async update(@Param('id') id: string, @Body() updateSaleDto: UpdateSaleDto): Promise<String> {
-    const res = await this.salesService.update(+id, updateSaleDto);
+    const res = await this.salesService.updateState(+id, updateSaleDto);
     return res ? 'Estado cambiado satisfactoriamente' : 'Se presento un error al cambiar el estado';
   }
 

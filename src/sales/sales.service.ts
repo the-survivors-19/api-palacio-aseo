@@ -21,7 +21,7 @@ export class SalesService {
     const user = await this.userService.findEmail(email_user);
     const sale = await this.saleRepository.create(data);
     sale.user = user;
-    sale.current_state = data.current_state;
+    sale.state = data.state;
     console.log(data);
     
     return (await this.saleRepository.save(sale)).id;
@@ -44,6 +44,10 @@ export class SalesService {
   }
 
   async update(id: number, updateSaleDto: UpdateSaleDto): Promise<boolean> {
-    return (Boolean) (await this.saleRepository.update(id, { current_state: updateSaleDto.state as States}));
+    return (Boolean) (await this.saleRepository.update(id, updateSaleDto));
+  }
+
+  async updateState(id: number, updateSaleDto: UpdateSaleDto): Promise<boolean> {
+    return (Boolean) (await this.saleRepository.update(id, { state: updateSaleDto.state as States}));
   }
 }

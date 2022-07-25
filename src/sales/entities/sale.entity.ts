@@ -38,7 +38,7 @@ export class Sale {
     length: 20,
     default: 'PENDIENTE',
   })
-  current_state: string;
+  state: string;
 
   @ManyToOne(() => User, (user) => user.id)
   @JoinColumn({
