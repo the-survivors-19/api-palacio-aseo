@@ -34,7 +34,7 @@ import { AppController } from './app.controller';
 @Module({
   imports: [
     ServeStaticModule.forRoot({
-      rootPath: join(__dirname, '../..', 'public/dist')
+      rootPath: join(__dirname, '../..', 'public/dist'),
     }),
     ConfigModule.forRoot(),
     TypeOrmModule.forRoot({
@@ -57,8 +57,8 @@ import { AppController } from './app.controller';
         WeightProduct,
         Rating,
         Sale,
-        SalesDetails
-      ]
+        SalesDetails,
+      ],
     }),
     AuthModule,
     UsersModule,
@@ -78,7 +78,5 @@ import { AppController } from './app.controller';
   providers: [],
 })
 export class AppModule {
-  constructor(
-    private connection: Connection
-  ){}
+  constructor(private connection: Connection) {}
 }
